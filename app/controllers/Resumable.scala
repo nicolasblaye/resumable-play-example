@@ -18,7 +18,7 @@ object Resumable extends Controller with BodyParsers {
     val resumableChunkNumber = resumableParams("resumableChunkNumber").toInt
     ResumableInfoStorage.getResumableInfo(resumableParams) match {
       case Some(info) =>
-        val raf: RandomAccessFile = new RandomAccessFile(info.resumableFilePath, "rw")
+        val raf = new RandomAccessFile(info.resumableFilePath, "rw")
         raf.seek((resumableChunkNumber - 1) * info.resumableChunkSize.toLong)
 
         request.body.files foreach {

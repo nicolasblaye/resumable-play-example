@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 trait BodyParsers {
 
-  // hadle file part as Array[Byte]
+  // handle file part as Array[Byte]
   def handleFilePartAsByteArray: PartHandler[FilePart[Array[Byte]]] = {
     val os = new ByteArrayOutputStream()
     handleFilePart {

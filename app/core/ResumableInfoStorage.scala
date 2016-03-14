@@ -1,11 +1,8 @@
 package core
 
 import models.ResumableInfo
-
 import play.api.Play
-
 import scala.util.Try
-
 import java.io.File
 
 

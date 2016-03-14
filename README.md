@@ -16,7 +16,7 @@ and [https://github.com/23/resumable.js/tree/master/samples/java](https://github
 
 You can get this example through [Activator](https://typesafe.com/activator).
 For more information please use following url that explains how to get this template on your computer 
-step-by-step: [https://www.typesafe.com/activator/template/resumable-play-example](https://www.typesafe.com/activator/template/resumable-play-example)
+step-by-step: [https://www.lightbend.com/activator/template/resumable-play-example](https://www.lightbend.com/activator/template/resumable-play-example)
 
 ## Run
 
@@ -29,6 +29,6 @@ Then you can find application on following url: [http://localhost:9000/](http://
 
 ## Copyright
 
-Copyright (C) 2015 FusionWorks.
+Copyright (C) 2015-2016 FusionWorks.
 
 Distributed under the Apache 2 license.
