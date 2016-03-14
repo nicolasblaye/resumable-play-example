@@ -1,31 +1,31 @@
 package core
 
-import java.io.File
-
 import models.ResumableInfo
+
 import play.api.Play
 
-import scala.collection._
 import scala.util.Try
+
+import java.io.File
+
 
 object ResumableInfoStorage {
 
-  val uploadDir: String = Try {
+  val uploadDir = Try {
     Play.current.configuration.getString("local.upload.dir").get
   }.getOrElse("")
 
-  private val mMap: mutable.Map[String, ResumableInfo] = mutable.Map[String, ResumableInfo]()
+  private var mMap = Map[String, ResumableInfo]()
 
   def get(resumableInfo: ResumableInfo): ResumableInfo = {
-    mMap.get(resumableInfo.resumableIdentifier) match {
-      case Some(i) => i
-      case None => mMap += (resumableInfo.resumableIdentifier -> resumableInfo)
-        mMap(resumableInfo.resumableIdentifier)
-    }
+    mMap.getOrElse(resumableInfo.resumableIdentifier, {
+      mMap += (resumableInfo.resumableIdentifier -> resumableInfo)
+      resumableInfo
+    })
   }
 
   def remove(info: ResumableInfo) {
-    mMap.remove(info.resumableIdentifier)
+    mMap = mMap - info.resumableIdentifier
   }
 
   def getResumableInfo(resumableParams: Map[String, String]): Option[ResumableInfo] = {
@@ -40,7 +40,7 @@ object ResumableInfoStorage {
         resumableFilePath = new File(uploadDir, resumableParams("resumableFilename")).getAbsolutePath + ".temp"
       )
     )
-    if (!info.isValid) {
+    if (info.notValid) {
       remove(info)
       None
     } else Some(info)
