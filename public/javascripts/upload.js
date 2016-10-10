@@ -8,8 +8,9 @@ $(function(){
     //r.on('fileAdded', function(file){
     //    r.upload();
     //});
-    $("#button").click( function()
+    $("#button").click( function(file)
         {
+        console.log(file)
             r.upload();
         }
     );

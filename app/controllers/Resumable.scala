@@ -11,7 +11,7 @@ import play.api.mvc.{Action, Controller}
  * Inspired by: http://www.codedisqus.com/CyVjUkUWjq/how-to-upload-a-huge-file-in-play-framework.html
  * and https://github.com/23/resumable.js/tree/master/samples/java
  **/
-object Resumable extends Controller with BodyParsers {
+class Resumable extends Controller with BodyParsers {
 
   def doPost() = Action(multipartFormDataAsBytes) { request =>
     val resumableParams = request.body.dataParts.mapValues(_.head)
