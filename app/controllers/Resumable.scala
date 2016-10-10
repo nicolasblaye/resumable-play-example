@@ -16,14 +16,17 @@ object Resumable extends Controller with BodyParsers {
   def doPost() = Action(multipartFormDataAsBytes) { request =>
     val resumableParams = request.body.dataParts.mapValues(_.head)
     val resumableChunkNumber = resumableParams("resumableChunkNumber").toInt
+
     ResumableInfoStorage.getResumableInfo(resumableParams) match {
       case Some(info) =>
         val raf = new RandomAccessFile(info.resumableFilePath, "rw")
+
         raf.seek((resumableChunkNumber - 1) * info.resumableChunkSize.toLong)
 
         request.body.files foreach {
           case FilePart(key, filename, content, bytes) => raf.write(bytes)
         }
+
         raf.close()
 
         info.addUploadedChunk(resumableChunkNumber)
@@ -31,7 +34,6 @@ object Resumable extends Controller with BodyParsers {
         Ok
       case None => BadRequest
     }
-
   }
 
   def doGet() = Action { request =>
